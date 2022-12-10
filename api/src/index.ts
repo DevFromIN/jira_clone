@@ -3,6 +3,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 
 import createDatabaseConnection from 'database/createConnection';
 import { addRespondToResponse } from 'middleware/response';
@@ -26,6 +27,7 @@ const initializeExpress = (): void => {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded());
+  app.use(morgan('dev'));
 
   app.use(addRespondToResponse);
 
@@ -38,7 +40,9 @@ const initializeExpress = (): void => {
   app.use((req, _res, next) => next(new RouteNotFoundError(req.originalUrl)));
   app.use(handleError);
 
-  app.listen(process.env.PORT || 3000);
+  app.listen(process.env.PORT || 3000, () => {
+    console.log('Server started');
+  });
 };
 
 const initializeApp = async (): Promise<void> => {

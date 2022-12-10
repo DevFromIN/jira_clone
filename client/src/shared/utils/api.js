@@ -19,20 +19,20 @@ const defaults = {
   },
 };
 
-const api = (method, url, variables) =>
+const api = (method, url, variables = {}) =>
   new Promise((resolve, reject) => {
     axios({
-      url: `${defaults.baseURL}${url}`,
+      baseURL: defaults.baseURL,
+      url,
       method,
       headers: defaults.headers(),
       params: method === 'get' ? variables : undefined,
       data: method !== 'get' ? variables : undefined,
-      paramsSerializer: objectToQueryString,
     }).then(
-      response => {
+      (response) => {
         resolve(response.data);
       },
-      error => {
+      (error) => {
         if (error.response) {
           if (error.response.data.error.code === 'INVALID_TOKEN') {
             removeStoredAuthToken();

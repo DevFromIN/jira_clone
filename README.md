@@ -28,21 +28,61 @@ There are many showcase/example React projects out there but most of them are wa
 - Client written in Babel powered JavaScript
 - API written in TypeScript and using TypeORM
 
-## Setting up development environment 🛠
+## Getting Started 🛠
 
-- Install [postgreSQL](https://www.postgresql.org/) if you don't have it already and create a database named `jira_development`.
-- `git clone https://github.com/oldboyxx/jira_clone.git`
-- Create an empty `.env` file in `/api`, copy `/api/.env.example` contents into it, and fill in your database username and password.
-- `npm run install-dependencies`
-- `cd api && npm start`
-- `cd client && npm start` in another terminal tab
-- App should now be running on `http://localhost:8080/`
+Make sure you have [Node.js](https://nodejs.org/en/) and [PostgreSQL](https://www.postgresql.org/download/) installed.
+
+1. [Enter your postgres terminal](https://replayable.io/replay/630b672f544b16006844e59a/?share=EtpMi7WDrbi8ly18WObRQQ) and create a database named `jira_development`.
+
+   ```sql
+   CREATE DATABASE jira_development;
+   ```
+
+2. Clone this repository and enter the project directory.
+
+   ```bash
+   git clone git@github.com:oldboyxx/jira_clone.git
+   cd jira_clone
+   ```
+
+3. The API uses environmental variables. Make sure to create an `.env` file in `/api` and use our sample `/api/.env.example` as a baseline.
+
+   ```bash
+   cp api/.env.example api/.env
+   ```
+
+4. Don't forget to fill in your database username and password in the `api/.env` file. It should be the same user that created the database from step 1.
+
+   ```
+   DB_USERNAME=postgres
+   DB_PASSWORD=
+   ```
+
+5. Install Node dependencies
+
+   ```bash
+   yarn run install-dependencies
+   ```
+
+6. Start the API server.
+
+   ```bash
+   cd api && yarn start
+   ```
+
+7. From another terminal, start the front end.
+
+   ```bash
+   cd client && yarn start
+   ```
+
+   The app should now be running on `http://localhost:8080/`.
 
 ## Running cypress end-to-end tests 🚥
 
 - Set up development environment
-- Create a database named `jira_test` and start the api with `cd api && npm run start:test`
-- `cd client && npm run test:cypress`
+- Create a database named `jira_test` and start the api with `cd api && yarn run start:test`
+- `cd client && yarn run test:cypress`
 
 ## What's missing?
 

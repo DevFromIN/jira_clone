@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useDeferredValue } from 'react';
 import PropTypes from 'prop-types';
 import { Route, useRouteMatch, useHistory } from 'react-router-dom';
 
@@ -28,6 +28,7 @@ const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
   const history = useHistory();
 
   const [filters, mergeFilters] = useMergeState(defaultFilters);
+  const deferredFilters = useDeferredValue(filters);
 
   return (
     <Fragment>
@@ -41,19 +42,19 @@ const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
       />
       <Lists
         project={project}
-        filters={filters}
+        filters={deferredFilters}
         updateLocalProjectIssues={updateLocalProjectIssues}
       />
       <Route
         path={`${match.path}/issues/:issueId`}
-        render={routeProps => (
+        render={(routeProps) => (
           <Modal
             isOpen
             testid="modal:issue-details"
             width={1040}
             withCloseIcon={false}
             onClose={() => history.push(match.url)}
-            renderContent={modal => (
+            renderContent={(modal) => (
               <IssueDetails
                 issueId={routeProps.match.params.issueId}
                 projectUsers={project.users}
